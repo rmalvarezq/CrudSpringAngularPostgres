@@ -1,9 +1,14 @@
 import { Injectable } from '@angular/core';
-
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaisesService {
+  private API_SERVER = 'http://localhost:9090/pais/';
+  constructor(private httpClient: HttpClient) {}
 
-  constructor() { }
+  public getAllPaises(): Observable<any> {
+    return this.httpClient.get(this.API_SERVER);
+  }
 }
