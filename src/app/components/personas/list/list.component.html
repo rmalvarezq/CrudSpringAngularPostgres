@@ -1,0 +1,24 @@
+<div class="container">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>Pais</th>
+            <th>Estadoo</th>
+            <th>Opciones</th>
+        </tr>
+    </table>
+    <tbody>
+        <tr *ngFor="let item of personas">
+            <td> {{item.id}} </td>
+            <td> {{item.nombre}} </td>
+            <td> {{item.apellido}} </td>
+            <td> {{item.edad}} </td>
+            <td> {{item.pais.nombre}} </td>
+            <td> {{item.estado.nombre}} </td>
+            <td> <button type="Borrar">Borrar</button> </td>
+        </tr>
+    </tbody>
+</div>
