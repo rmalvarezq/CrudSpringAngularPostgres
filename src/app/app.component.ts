@@ -24,6 +24,7 @@ export class AppComponent {
   ) {}
   ngOnInit(): void {
     this.personaForm = this.fb.group({
+      id: [''],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
       edad: ['', Validators.required],
@@ -62,6 +63,10 @@ export class AppComponent {
     this.personasService.savePersona(this.personaForm.value).subscribe(
       (resp) => {
         this.personaForm.reset();
+        this.personas = this.personas.filter(
+          (persona) => resp.id !== persona.id
+        );
+        this.personas.push(resp);
       },
       (error) => {
         console.error(error);
@@ -69,6 +74,24 @@ export class AppComponent {
     );
   }
 
+  eliminar(persona) {
+    this.personasService.deletePersona(persona.id).subscribe((resp) => {
+      // console.log(resp);
+      if (resp) {
+        this.personas.pop(persona);
+      }
+    });
+  }
+  editar(persona) {
+    this.personaForm.setValue({
+      id: persona.id,
+      nombre: persona.nombre,
+      apellido: persona.apellido,
+      edad: persona.edad,
+      pais: persona.pais,
+      estado: persona.estado,
+    });
+  }
   // cargarEstadosPorPaisesID(event) {
   //   this.estadosService.getEstadosById(event.target.value).subscribe(
   //     (resp) => {
@@ -80,7 +103,7 @@ export class AppComponent {
   //   );
   // }
 
-  navPersona(){
-    this.route.navigate(["/listar"]);
+  navPersona() {
+    this.route.navigate(['/listar']);
   }
 }
